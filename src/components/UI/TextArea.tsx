@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
-export interface SelectProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {}
+export interface TextAreaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
-const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ className, ...props }, ref) => {
-    const radius = 120;
+    const radius = 320;
     const [visible, setVisible] = React.useState(false);
 
     let mouseX = useMotionValue(0);
@@ -34,22 +34,18 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         onMouseLeave={() => setVisible(false)}
         className="p-[3px] pt-[0.2px] rounded-lg transition duration-300 group/input"
       >
-        <select
-          className={`flex h-[50px] w-full border-none mt-1 bg-[#272838] text-white shadow-input rounded-md px-3 py-2 text-sm
+        <textarea
+          className={`flex w-full border-none mt-1 bg-[#272838] text-white shadow-input rounded-md px-3 py-2 text-sm
            placeholder:text-white focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-hover/input:shadow-none transition duration-400
            `}
           ref={ref}
           {...props}
-        >
-          <option value="">--select--</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-          <option value="neutral">Neutral</option>
-        </select>
+          rows={10}
+        ></textarea>
       </motion.div>
     );
   }
 );
-Select.displayName = "Input";
+TextArea.displayName = "Input";
 
-export { Select };
+export { TextArea };

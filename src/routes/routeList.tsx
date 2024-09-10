@@ -1,5 +1,5 @@
 import { RouteObject } from "react-router-dom";
-import { HomePage, SignInPage, SignUpPage, NotFoundPage } from "../pages";
+import { HomePage, SignInPage, NotFoundPage } from "../pages";
 
 export const routeList: RouteObject[] = [
   {
@@ -12,12 +12,8 @@ export const routeList: RouteObject[] = [
     ],
   },
   {
-    path: "/sign-in",
+    path: "/login",
     element: <SignInPage />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUpPage />,
   },
   {
     path: "*",

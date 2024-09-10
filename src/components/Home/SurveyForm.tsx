@@ -1,25 +1,80 @@
-import { Input } from "../UI/Input";
+import { ChangeEvent, FC, useState } from "react";
 import { Label } from "../UI/Label";
 import { Select } from "../UI/Select";
+import { TextArea } from "../UI/TextArea";
+import { surveySubmitHandler } from "../../api/apiHandlers";
 
-const SurveyForm = () => {
+type Props = {
+  totalSurvey: any;
+};
+
+const SurveyForm: FC<Props> = ({ totalSurvey }): JSX.Element => {
+  const [surveyInputState, setSurveyInputState] = useState({
+    response: "",
+    description: "",
+  });
+
+  const [surveyState, setSurveyState] = useState({
+    isLoading: false,
+    data: null,
+    error: null,
+  });
+
+  const submitHandler = async () => {
+    const res = await surveySubmitHandler({
+      id: totalSurvey.data.results[0]?.id,
+      ...surveyInputState,
+    });
+
+    setSurveyState({
+      isLoading: false,
+      data: res.data,
+      error: res.error,
+    });
+  };
+
+  const changeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setSurveyInputState((prev: { response: string; description: string }) => {
+      return {
+        ...prev,
+        [e.target?.name]: e.target?.value,
+      };
+    });
+  };
+
+  console.log("surveyInputState surveyInputState :", surveyInputState);
+
   return (
     <div className="mt-8 p-4 my-8 bg-[#2E2F40] rounded-md">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-
-          console.log("sign in form submitted");
+          submitHandler();
         }}
         className="mb-5"
       >
         <div className="mt-5">
-          <Label htmlFor="email">Select Option</Label>
-          <Select id="choose_item" />
+          <Label htmlFor="response">Select Option</Label>
+          <Select
+            id="response"
+            name="response"
+            value={surveyInputState.response}
+            required={true}
+            onChange={(e) => changeHandler(e)}
+          />
         </div>
         <div className="mt-5">
-          <Label htmlFor="comment">Comment</Label>
-          <Input id="comment" placeholder="Enter Comment" type="text" />
+          <Label htmlFor="description">Comment</Label>
+          <TextArea
+            id="description"
+            placeholder="Enter Comment"
+            required={true}
+            name="description"
+            value={surveyInputState.description}
+            onChange={(e) => changeHandler(e)}
+          />
         </div>
         <div className="mt-5 flex justify-end items-center">
           <button
