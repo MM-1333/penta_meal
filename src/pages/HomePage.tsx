@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import HomeLayout from "../components/Home";
+import Home from "../components/Home";
 
 export const HomePage: FC = (): JSX.Element => {
-  return <HomeLayout />;
+  return <Home />;
 };

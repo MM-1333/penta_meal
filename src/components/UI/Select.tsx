@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface SelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  ({ className, ...props }, ref) => {
     const radius = 120;
     const [visible, setVisible] = React.useState(false);
 
@@ -34,18 +34,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onMouseLeave={() => setVisible(false)}
         className="p-[3px] pt-[0.2px] rounded-lg transition duration-300 group/input"
       >
-        <input
-          type={type}
+        <select
           className={`flex h-[50px] w-full border-none mt-1 bg-[#272838] text-white shadow-input rounded-md px-3 py-2 text-sm
            placeholder:text-white focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 group-hover/input:shadow-none transition duration-400
            `}
           ref={ref}
           {...props}
-        />
+        >
+          <option value="">--select--</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="no_comment">No Comment</option>
+        </select>
       </motion.div>
     );
   }
 );
-Input.displayName = "Input";
+Select.displayName = "Input";
 
-export { Input };
+export { Select };
